@@ -1,0 +1,56 @@
+<section
+  class="purchase-details container-verticle"
+  style="justify-content: space-around"
+>
+  <h1 class="element-center">Purchase Details</h1>
+  <hr />
+  <div class="container-center">
+    <button type="button" class="pay-btn">
+      <img
+        src="{{url_for('static',filename = 'images/google-pay.png')}}"
+        alt="google pay"
+        onclick="thirdPartyPayment()"
+      />
+    </button>
+    <button type="button" class="pay-btn">
+      <img
+        src="{{url_for('static',filename = 'images/apple-pay.png')}}"
+        alt="google pay"
+        onclick="thirdPartyPayment()"
+      />
+    </button>
+  </div>
+  <hr />
+  <div class="container-center">
+    <div class="container-verticle">
+      <label for="creditcard-details">enter credit card number</label>
+      <input type="number" name="creditcard-details" required />
+    </div>
+
+    <div class="container-verticle">
+      <label for="card-name">enter card name</label>
+      <input type="text" name="card-name" required />
+    </div>
+
+    <div class="container-verticle">
+      <label for="expiry-date">enter expiry date:</label>
+      <input type="date" name="expiry-date" required />
+    </div>
+  </div>
+</section>
+
+<script>
+  function thirdPartyPayment() {
+    event.preventDefault();
+    console.log(
+      typeof isValid("service") != "object"
+        ? typeof isValid("details") != "object"
+          ? sendData(getFormData()).then(
+              () => alert("sent successfully, your safe to leave"),
+              () => alert("did not send proper, please try again later")
+            )
+          : isValid("details")[0].reportValidity()
+        : isValid("service")[0].reportValidity()
+    );
+  }
+</script>

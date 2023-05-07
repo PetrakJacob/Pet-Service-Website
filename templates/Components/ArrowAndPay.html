@@ -1,0 +1,128 @@
+<div class="arrows-pay-btn container-center">
+  <button
+    type="button"
+    class="left-arrow"
+    onclick="leftArrowClick()"
+    style="font-size: 30px"
+  >
+    <i class="fa-solid fa-arrow-left"></i>
+  </button>
+  <button type="submit" onclick="validityChecker(event)">Submit</button>
+  <button
+    type="button"
+    class="right-arrow"
+    onclick="rightArrowClick()"
+    style="font-size: 30px"
+  >
+    <i class="fa-solid fa-arrow-right"></i>
+  </button>
+</div>
+
+<script>
+  function getCurrentInputField() {
+    if (getClassStyles("service").display != "none") {
+      console.log("current input field is service");
+      return "service";
+    } else if (getClassStyles("details").display != "none") {
+      console.log("current input field is display");
+      return "details";
+    } else {
+      console.log("current input field is perchase-details");
+      return "purchase-details";
+    }
+  }
+
+  const inputFields = ["service", "details", "purchase-details"];
+
+  function getNextInputField(inputName) {
+    if (inputFields[inputFields.indexOf(inputName) + 1]) {
+      return inputFields[inputFields.indexOf(inputName) + 1];
+    } else {
+      return inputFields[0];
+    }
+  }
+  function getLastInputField(inputName) {
+    if (inputFields[inputFields.indexOf(inputName) - 1]) {
+      return inputFields[inputFields.indexOf(inputName) - 1];
+    } else {
+      return inputFields.at(-1);
+    }
+  }
+
+  function leftArrowClick() {
+    const currentElem = getCurrentInputField();
+    getClassStyles("service").display = "none";
+    getClassStyles("details").display = "none";
+    getClassStyles("purchase-details").display = "none";
+    getClassStyles(getLastInputField(currentElem)).display = "flex";
+    updateButtonStyle(getLastInputField(currentElem));
+  }
+
+  function rightArrowClick() {
+    const currentElem = getCurrentInputField();
+    getClassStyles("service").display = "none";
+    getClassStyles("details").display = "none";
+    getClassStyles("purchase-details").display = "none";
+    getClassStyles(getNextInputField(currentElem)).display = "flex";
+    updateButtonStyle(getNextInputField(currentElem));
+  }
+
+  function isValid(section) {
+    changeContent(section);
+    updateButtonStyle(section);
+    incorrectElements = Array.from(
+      document
+        .getElementsByClassName(section)[0]
+        .querySelectorAll('input:not(input[type="checkbox"]), select')
+    ).filter((element) => {
+      return !element.checkValidity();
+    });
+    return typeof incorrectElements[0] === "undefined"
+      ? true
+      : incorrectElements;
+  }
+  function newObj(obj, key, value) {
+    obj[key] = value;
+    return obj;
+  }
+
+  function getFormSectionData(section) {
+    return Array.from(
+      document
+        .getElementsByClassName(section)[0]
+        .querySelectorAll("input, select")
+    ).reduce(
+      (base, currentElem) => newObj(base, currentElem.name, currentElem.value),
+      {}
+    );
+  }
+  function getFormData() {
+    return {
+      ...getFormSectionData("service"),
+      ...getFormSectionData("details"),
+      ...getFormSectionData("purchase-details"),
+    };
+  }
+  async function sendData(body) {
+    return await fetch("/purchase-data", {
+      headers: { "Content-Type": "application/json" },
+      method: "POST",
+      body: JSON.stringify(body),
+    });
+  }
+  function validityChecker(event) {
+    event.preventDefault();
+    console.log(
+      typeof isValid("service") != "object"
+        ? typeof isValid("details") != "object"
+          ? typeof isValid("purchase-details") != "object"
+            ? sendData(getFormData()).then(
+                () => alert("sent successfully, your safe to leave"),
+                () => alert("did not send proper, please try again later")
+              )
+            : isValid("purchase-details")[0].reportValidity()
+          : isValid("details")[0].reportValidity()
+        : isValid("service")[0].reportValidity()
+    );
+  }
+</script>

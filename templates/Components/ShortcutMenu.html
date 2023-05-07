@@ -1,0 +1,47 @@
+<div class="shortcut-menu">
+  <button
+    name="service"
+    onclick="changeContent(event.target.name); updateButtonStyle(event.target.name);"
+    style="background-color: var(--col1); color: white"
+  >
+    🦮service
+  </button>
+  <button
+    name="details"
+    onclick="changeContent(event.target.name); updateButtonStyle(event.target.name);"
+  >
+    🏠details
+  </button>
+  <button
+    name="purchase-details"
+    onclick="changeContent(event.target.name); updateButtonStyle(event.target.name);"
+  >
+    💳checkout
+  </button>
+</div>
+
+<script>
+  function getClassStyles(name) {
+    return document.getElementsByClassName(name)[0].style;
+  }
+  function changeContent(currentElem) {
+    getClassStyles("service").display = "none";
+    getClassStyles("details").display = "none";
+    getClassStyles("purchase-details").display = "none";
+    getClassStyles(currentElem).display = "flex";
+  }
+  function changeToFocusStyle(element) {
+    element.style.color = "white";
+    element.style.backgroundColor = "var(--col1)";
+  }
+  function changeToUnfocusStyle(element) {
+    element.style.color = "black";
+    element.style.backgroundColor = "white";
+  }
+  function updateButtonStyle(currentElem) {
+    changeToUnfocusStyle(getElemByName("service")[0]);
+    changeToUnfocusStyle(getElemByName("details")[0]);
+    changeToUnfocusStyle(getElemByName("purchase-details")[0]);
+    changeToFocusStyle(getElemByName(currentElem)[0]);
+  }
+</script>

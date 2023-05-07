@@ -1,0 +1,151 @@
+<section
+  class="service container-verticle"
+  style="justify-content: space-around"
+>
+  <h1 class="element-center">Service</h1>
+  <div class="container-center service-container">
+    <select
+      class="service-select"
+      name="service-select"
+      onchange="serviceChange(event); changeCost(calculateCost());"
+      required
+    >
+      <option value="walking">walking</option>
+      <option value="sitting">sitting</option>
+    </select>
+    <select
+      class="dogs-on-walk"
+      name="dogs-on-walk"
+      onchange="dogChange(event); changeCost(calculateCost());"
+    >
+      <option value="1">1 dog on walk</option>
+      <option value="2">2 dogs on walk</option>
+      <option value="3">3 dogs on walk</option>
+    </select>
+    <select name="times" class="times" onchange="changeCost(calculateCost())">
+      <option value="1">1 hour service</option>
+      <option name="30-min-walk" value="0.5">0.5 hour service</option>
+    </select>
+    <select
+      name="days-of-service"
+      class="days-of-service"
+      onchange="changeCost(calculateCost())"
+    >
+      <option value="1">1 day</option>
+      <option value="2">2 days</option>
+      <option value="3">3 days</option>
+      <option value="4">4 days</option>
+      <option value="5">5 days</option>
+      <option value="6">6 days</option>
+      <option value="7">7 days</option>
+    </select>
+  </div>
+  <h3 class="element-center cost"></h3>
+</section>
+
+<script>
+  function getElemByName(name) {
+    return document.getElementsByName(name);
+  }
+
+  function walkingOne30Min(daysOfService) {
+    if (daysOfService > 6) {
+      return 20;
+    } else {
+      return 18;
+    }
+  }
+  function walkingOne1Hr(daysOfService) {
+    if (daysOfService < 6) {
+      return 30;
+    } else {
+      return 28;
+    }
+  }
+  function walkingTwo(daysOfService) {
+    if (daysOfService < 4) {
+      return 38;
+    } else if (daysOfService < 6) {
+      return 36;
+    } else {
+      return 34;
+    }
+  }
+  function walkingThree(daysOfService) {
+    if (daysOfService < 4) {
+      return 42;
+    } else if (daysOfService < 6) {
+      return 40;
+    } else {
+      return 38;
+    }
+  }
+  function sitting30Min(daysOfService) {
+    if (daysOfService < 6) {
+      return 20;
+    } else {
+      return 18;
+    }
+  }
+  function sitting1Hr(daysOfService) {
+    if (daysOfService < 6) {
+      return 30;
+    } else {
+      return 28;
+    }
+  }
+
+  function calculateCost() {
+    const dogsOnWalk = parseInt(getElemByName("dogs-on-walk")[0].value);
+    const times = parseFloat(getElemByName("times")[0].value);
+    const daysOfService = parseInt(getElemByName("days-of-service")[0].value);
+
+    function newCost() {
+      if (getElemByName("service-select")[0].value == "walking") {
+        if (dogsOnWalk == 1 && times == 0.5) {
+          return walkingOne30Min(daysOfService);
+        } else if (dogsOnWalk == 1 && times == 1) {
+          return walkingOne1Hr(daysOfService);
+        } else if (dogsOnWalk == 2) {
+          return walkingTwo(daysOfService);
+        } else {
+          return walkingThree(daysOfService);
+        }
+      } else {
+        if (times == 0.5) {
+          return sitting30Min(daysOfService);
+        } else {
+          return sitting1Hr(daysOfService);
+        }
+      }
+    }
+    return daysOfService * newCost();
+  }
+
+  function changeCost(price) {
+    document.querySelector(".cost").innerHTML = `price: ${price}`;
+  }
+
+  function serviceChange(event) {
+    if (event.target.value == "sitting") {
+      getElemByName("dogs-on-walk")[0].style.display = "none";
+      getElemByName("30-min-walk")[0].disabled = false;
+    } else {
+      getElemByName("dogs-on-walk")[0].style.display = "flex";
+      if (getElemByName("dogs-on-walk")[0].value != 1) {
+        getElemByName("30-min-walk")[0].disabled = true;
+        getElemByName("times")[0].value = "1";
+      }
+    }
+  }
+  changeCost(calculateCost());
+
+  function dogChange(event) {
+    if (event.target.value == "1") {
+      getElemByName("30-min-walk")[0].disabled = false;
+    } else {
+      getElemByName("30-min-walk")[0].disabled = true;
+      getElemByName("times")[0].value = "1";
+    }
+  }
+</script>

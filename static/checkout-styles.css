@@ -1,0 +1,248 @@
+@font-face {
+  font-family: test;
+  src: url(./font/SFUIText-Regular.otf);
+}
+
+:root {
+  --col1: mediumslateblue;
+  --col2: #ffa500;
+  --col3: mediumslateblue;
+}
+
+* {
+  font-family: test, serif;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+body {
+  display: flex; /* or inline-flex */
+  flex-direction: row;
+  /* background-color: var(); */
+  /* background-color: bisque; */
+  /* color: white; */
+  overflow-x: hidden;
+}
+
+input {
+  border: 1px solid black;
+  padding: 10px;
+  /* font-size: 10px; */
+}
+.pay-btn {
+  width: 150px;
+  height: 100px;
+  padding: 10px;
+  /* border-radius: 20px; */
+}
+.pay-btn:hover {
+  background-color: lightgrey;
+}
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+h1 {
+  font-size: 50px;
+}
+h3 {
+  font-size: 30px;
+}
+section {
+  height: calc(70vh - 100px);
+  padding: -50px;
+  margin: 50px;
+  border-radius: 1%;
+  background-color: var(--col2);
+}
+
+select {
+  padding: 20px;
+  text-decoration: none;
+  /* border: 2px solid black; */
+  /* background-color: #CDF553; */
+}
+
+.container-center {
+  display: flex;
+  justify-content: space-around;
+  /* padding: 0, 300px; */
+}
+.container-verticle {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.element-center {
+  text-align: center;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.arrows-pay-btn {
+  height: 30vh;
+  display: flex;
+  align-items: center;
+}
+.arrows-pay-btn button {
+  height: 100px;
+  width: 100px;
+  font-size: 20px;
+  background-color: var(--col2);
+}
+.arrows-pay-btn button:hover {
+  background-color: var(--col3);
+  color: white;
+}
+.shortcut-menu {
+  width: 20vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* border-radius: 0 50px 50px 0; */
+  /* background-color: var(--col2); */
+}
+
+.shortcut-menu button {
+  background-color: rgba(0, 0, 0, 0);
+  /* color: white; */
+  display: block;
+  /* width: 50%; */
+  font-size: 30px;
+  margin: 25px;
+  padding: 25px;
+  border-radius: 5px;
+  /* background-color: white; */
+}
+.shortcut-menu button:hover {
+  background-color: var(--col3);
+  color: white;
+}
+
+.content {
+  height: 100vh;
+  width: 80vw;
+  /* background-color: bisque; */
+}
+
+.details {
+  display: none;
+}
+.purchase-details {
+  display: none;
+}
+.service {
+  display: flex;
+}
+
+@media (min-width: 0px) {
+  .shortcut-menu {
+    width: 100vw;
+    height: 10vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+  .form {
+    height: 90vh;
+    width: 100vw;
+  }
+  body {
+    display: flex;
+    flex-direction: column !important;
+  }
+  select {
+    padding: 5px;
+  }
+  input {
+    padding: 5px;
+  }
+
+  section {
+    height: 200vh;
+  }
+  .service-container {
+    flex-direction: column !important;
+  }
+  .details .container-center,
+  .purchase-details .container-center {
+    flex-direction: column !important;
+    justify-content: center;
+    align-items: center;
+  }
+}
+@media (min-width: 0px) {
+  .shortcut-menu button {
+    font-size: 17px;
+    margin: 17px;
+    padding: 17px;
+  }
+}
+@media (min-width: 480px) {
+  body {
+    display: flex;
+    flex-direction: column !important;
+  }
+  .shortcut-menu button {
+    font-size: 20px;
+    margin: 20px;
+    padding: 20px;
+  }
+}
+@media (min-width: 768px) {
+  .shortcut-menu button {
+    background-color: rgba(0, 0, 0, 0);
+    /* color: white; */
+    display: block;
+    /* width: 50%; */
+    font-size: 30px;
+    margin: 25px;
+    padding: 25px;
+    border-radius: 5px;
+    /* background-color: white; */
+  }
+  select {
+    padding: 25px;
+  }
+  input {
+    padding: 25px;
+  }
+
+  section {
+    height: 70vh;
+  }
+  .service-container {
+    flex-direction: row !important;
+  }
+  .details .container-center,
+  .purchase-details .container-center {
+    flex-direction: row !important;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+}
+@media (min-width: 1024px) {
+  .shortcut-menu {
+    width: 20vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  body {
+    display: flex;
+    flex-direction: row !important;
+  }
+  .form {
+    height: 100vh;
+    width: 80vw;
+  }
+}
+@media (min-width: 1200px) {
+}
